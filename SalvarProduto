@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class VendaProduto {
+    private List<Produto> produtosVendidos;
+    private List<Produto> produtosCadastrados;
+    private String arquivoProdutos = "produtos.txt";
+
+    public VendaProduto() {
+        this.produtosVendidos = new ArrayList<>();
+        this.produtosCadastrados = carregarProdutos();
+    }
+
+    public void cadastrarProduto(Produto produto) {
+        produtosCadastrados.add(produto);
+        salvarProdutos();
+    }
+
+    public void venderProduto(Produto produto, int quantidade) {
+        for (int i = 0; i < quantidade; i++) {
+            produtosVendidos.add(produto);
+        }
+        salvarProdutos();
+    }
+
+    public double calcularTotalVendas() {
+        double total = 0;
+        for (Produto produto : produtosVendidos) {
+            total += produto.getPreco();
+        }
+        return total;
+    }
+
+    public List<Produto> getProdutosCadastrados() {
+        return produtosCadastrados;
+    }
+
+    private List<Produto> carregarProdutos() {
+        List<Produto> produtos = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivoProdutos))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] partes = linha.split(",");
+                String nome = partes[0];
+                double preco = Double.parseDouble(partes[1]);
+                produtos.add(new Produto(nome, preco));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
+
+    private void salvarProdutos() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoProdutos))) {
+            for (Produto produto : produtosCadastrados) {
+                writer.write(produto.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
