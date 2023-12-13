@@ -1,0 +1,50 @@
+
+public class InterfaceVendas {
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Sistema de Vendas");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 300);
+
+            JPanel panel = new JPanel(new GridLayout(3, 2));
+
+            JLabel produtoLabel = new JLabel("Produto:");
+            JTextField produtoTextField = new JTextField();
+
+            JLabel quantidadeLabel = new JLabel("Quantidade:");
+            JTextField quantidadeTextField = new JTextField();
+
+            JButton venderButton = new JButton("Vender");
+
+            Produto produto = new Produto("Produto A", 50.0); // Produto de exemplo
+            RegistroVendas registroVendas = new RegistroVendas();
+
+            venderButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String produtoNome = produtoTextField.getText();
+                    int quantidade = Integer.parseInt(quantidadeTextField.getText());
+
+                    if (produtoNome.equals(produto.getNome())) {
+                        registroVendas.venderProduto(produto, quantidade);
+                        JOptionPane.showMessageDialog(frame, "Venda realizada:\nProduto: " + produto.getNome() +
+                                "\nQuantidade: " + quantidade + "\nTotal de Vendas: $" + registroVendas.calcularTotalVendas());
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Produto não encontrado");
+                    }
+                }
+            });
+
+            panel.add(produtoLabel);
+            panel.add(produtoTextField);
+            panel.add(quantidadeLabel);
+            panel.add(quantidadeTextField);
+            panel.add(new JLabel()); // Espaço em branco
+            panel.add(venderButton);
+
+            frame.add(panel);
+            frame.setVisible(true);
+        });
+    }
+}
