@@ -9,6 +9,7 @@ public class InterfaceVendas {
 
             JPanel panel = new JPanel(new GridLayout(3, 2));
 
+
             JLabel produtoLabel = new JLabel("Produto:");
             JTextField produtoTextField = new JTextField();
 
