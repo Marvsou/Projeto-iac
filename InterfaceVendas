@@ -5,7 +5,7 @@ public class InterfaceVendas {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Sistema de Vendas");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(400, 300);
+            frame.setSize(400, 300); //dimensoes
 
             JPanel panel = new JPanel(new GridLayout(3, 2));
 
